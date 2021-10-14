@@ -28,7 +28,7 @@
                 <div class="col-md-8">
                     <div class="form-froup mb-3">
                         <label for="a">Evernote</label>
-                        <textarea class="form-control" name="a" id="a" cols="30" rows="20">
+                        <textarea class="form-control" name="a" id="a" cols="30" rows="15">
 當日編號：01
 設備卡號：045678
 聯絡時間：8:15
@@ -261,7 +261,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     </div>
                     <div class="form-froup mb-3">
                         <label for="a">Excel</label>
-                        <textarea class="form-control" name="b" id="b" cols="30" rows="10"></textarea>
+                        <textarea class="form-control" name="b" id="b" cols="30" rows="6">================ 請按下「轉換」 ================</textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -272,11 +272,11 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     </div>
                     <div class="form-froup mb-3">
                         <button class="btn btn-secondary mb-3" type="button" id="clearAndPaste">清除並貼上</button>
-                        <button class="btn btn-secondary mb-3" type="button" id="clear">清除</button>
-                        <button class="btn btn-secondary mb-3" type="button" id="select">全選</button>
+                        <button class="btn btn-secondary mb-3 d-none" type="button" id="clear">清除</button>
+                        <button class="btn btn-secondary mb-3 d-none" type="button" id="select">全選</button>
                         <button class="btn btn-secondary mb-3" type="reset">重置範例</button>
                         <button class="btn btn-primary mb-3" type="submit">轉換</button>
-                        <button class="btn btn-primary mb-3" type="button" id="copy">複製</button>
+                        <button class="btn btn-secondary mb-3" type="button" id="copy">複製 Evernote</button>
                     </div>
                     <div class="form-froup mb-3">
                         <div class="card">
@@ -491,10 +491,9 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
             }
         })
 
-        // document.querySelector("textarea").addEventListener("click", function () {
-        //     this.select();
-        //     document.getElementById("msg").innerText = "提示訊息：請貼上 Evernote 格式，並按下轉換。"
-        // });
+        document.forms[0].b.addEventListener("click", function () {
+            this.select();
+        });
 
         // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
         function shuffle(array) {
