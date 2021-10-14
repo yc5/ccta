@@ -259,6 +259,10 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
 FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
             </textarea>
                     </div>
+                    <div class="form-froup mb-3">
+                        <label for="a">Excel</label>
+                        <textarea class="form-control" name="b" id="b" cols="30" rows="10"></textarea>
+                    </div>
                 </div>
                 <div class="col-md-4">
 
@@ -299,7 +303,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
 
     <script>
         let taNames = ["以誠", "君桓", "亭臻", "凱麟", "奕嫣"]
-        let data = {}, times, departments, catgories, transfers, catgoryTitles, output = "", tmpArray = [], tmpTotalTime = 0
+        let data, times, departments, catgories, transfers, catgoryTitles, output, output2, tmpArray = [], tmpTotalTime
         window.onload = () => {
             /* insert ta names option into select */
             let dayToday = new Date().getDay()
@@ -321,6 +325,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
             try {
                 times = document.forms[0].a.value.matchAll(/服務時間：\s*(\d+).+/g)
                 departments = document.forms[0].a.value.matchAll(/申請單位：(.+)/g)
+                types = document.forms[0].a.value.matchAll(/服務性質：[^x]+\[x\]\s([^\[\s]+)[^x]*\n/g)
                 catgories = document.forms[0].a.value.matchAll(/服務類別：[^x]+\[x\]\s([^\[\s]+)[^x]*\n/g)
                 transfers = document.forms[0].a.value.matchAll(/\d\.\s(.+\(僅有.+同仁有此權限，TA無法協助處理。\).+)/g)
                 catgoryTitles = document.forms[0].a.value.match(/服務類別：.+\n/g)[0]
@@ -340,6 +345,12 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     tmpArray.push(i[1])
                 }
                 departments = tmpArray
+                tmpArray = []
+
+                for (const i of types) {
+                    tmpArray.push(i[1])
+                }
+                types = tmpArray
                 tmpArray = []
 
                 for (const i of catgories) {
@@ -372,11 +383,12 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     && times.length == departments.length
                     && departments.length == catgories.length) {
                     output = ""
+                    output2 = ""
                     output += "---\n"
                     output += "#### "
                     output += new Date().toJSON().slice(5, 10).replace(/-/g, '/')
                     output += " AM PM\n"
-                    output += "- TA：" + document.getElementById("name").value + "\n"
+                    output += "- TA：" + document.forms[0].name.value + "\n"
                     output += "- 防禦率(S/T)\n"
                     output += "    - 總服務案件數(T)：" + times.length + "\n"
                     output += "    - 自行解決案件數(S)：" + (times.length - transfers.length) + "\n"
@@ -416,7 +428,22 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     output += "- 用戶申訴事項：無。\n"
                     output += "- 建議：無。\n\n"
 
+                    for (let i = 0; i < times.length; i++) {
+                        tmpArray.push(new Date().toJSON().slice(5, 10).replace(/-/g, '/'))
+                        tmpArray.push(document.forms[0].name.value)
+                        tmpArray.push(types[i])
+                        tmpArray.push(catgories[i])
+                        tmpArray.push(times[i])
+                        tmpArray.push(departments[i])
+                        tmpArray.push(5)
+                        tmpArray.push((i + 1))
+                        output2 += tmpArray.join("\t")
+                        output2 += "\n"
+                        tmpArray = []
+                    }
+
                     document.forms[0].a.value = output
+                    document.forms[0].b.value = output2
 
                     document.querySelector("textarea").select();
                     document.getElementById("msg").innerText = "轉換完成。"
