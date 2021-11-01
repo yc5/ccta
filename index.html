@@ -268,7 +268,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
 
                     <div class="form-froup mb-3">
                         <label for="name">TA</label>
-                        <select class="form-control" id="name"></select>
+                        <input type="text" class="form-control" id="name" placeholder="請輸入TA名字..." required></input>
                     </div>
                     <div class="form-froup mb-3">
                         <button class="btn btn-secondary mb-3" type="button" id="clearAndPaste">清除並貼上</button>
@@ -302,11 +302,11 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
     </footer>
 
     <script>
-        let taNames = ["以誠", "君桓", "亭臻", "凱麟", "奕嫣"]
+        // let taNames = ["以誠", "君桓", "亭臻", "凱麟", "奕嫣"]
         let data, times, departments, catgories, transfers, catgoryTitles, output, output2, tmpArray = [], tmpTotalTime
         window.onload = () => {
             /* insert ta names option into select */
-            let dayToday = new Date().getDay()
+            /* let dayToday = new Date().getDay()
             let itemSelect = document.createElement("option")
             if (dayToday <= 5) {
                 itemSelect.text = taNames[dayToday - 1]
@@ -317,7 +317,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                 var itemSelect = document.createElement("option")
                 itemSelect.text = e
                 document.getElementById("name").appendChild(itemSelect)
-            })
+            }) */
         }
         document.forms[0].addEventListener("submit", (e) => {
             e.preventDefault()
