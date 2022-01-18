@@ -261,7 +261,8 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     </div>
                     <div class="form-froup mb-3">
                         <label for="b">Excel</label>
-                        <textarea class="form-control" name="b" id="b" cols="30" rows="6">================ 請按下「轉換」 ================</textarea>
+                        <textarea class="form-control" name="b" id="b" cols="30"
+                            rows="6">================ 請按下「轉換」 ================</textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -299,11 +300,15 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
             <span class="text-muted">&copy; 2021 XSTAR STUDIO</span>
             <a href="https://github.com/yc5/ccta" target="_blank">GitHub</a>
         </div>
+        <div class="container">
+            <span class="text-muted"> 最後更新:2022/01/07 by TJ
+                (檔案位址：C:/Users/CCTA/Documents/tmp/convert/index2022.html)</span>
+        </div>
     </footer>
 
     <script>
         // let taNames = ["以誠", "君桓", "亭臻", "凱麟", "奕嫣"]
-        let data, times, departments, catgories, transfers, catgoryTitles, output, output2, tmpArray = [], tmpTotalTime
+        let data, times, departments, applicants, catgories, transfers, catgoryTitles, output, output2, tmpArray = [], tmpTotalTime
         window.onload = () => {
             /* insert ta names option into select */
             /* let dayToday = new Date().getDay()
@@ -325,6 +330,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
             try {
                 times = document.forms[0].a.value.matchAll(/服務時間：\s*(\d+).+/g)
                 departments = document.forms[0].a.value.matchAll(/申請單位：(.+)/g)
+                applicants = document.forms[0].a.value.matchAll(/申請人\(分機\)：(.+)/g)
                 types = document.forms[0].a.value.matchAll(/服務性質：[^x]+\[x\]\s([^\[\s]+)[^x]*\n/g)
                 catgories = document.forms[0].a.value.matchAll(/服務類別：[^x]+\[x\]\s([^\[\s]+)[^x]*\n/g)
                 transfers = document.forms[0].a.value.matchAll(/\d\.\s(.+\(僅有.+同仁有此權限，TA無法協助處理。\).+)/g)
@@ -345,6 +351,12 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                     tmpArray.push(i[1])
                 }
                 departments = tmpArray
+                tmpArray = []
+
+                for (const i of applicants) {
+                    tmpArray.push(i[1])
+                }
+                applicants = tmpArray
                 tmpArray = []
 
                 for (const i of types) {
@@ -434,6 +446,7 @@ FAQ選項： [] 已存在FAQ　 [] 已建立FAQ　 [x] 可能以後不會發生
                         tmpArray.push(document.forms[0].name.value)
                         tmpArray.push(i + 1)
                         tmpArray.push(departments[i])
+                        tmpArray.push(applicants[i])
                         tmpArray.push(types[i])
                         tmpArray.push(catgories[i])
                         tmpArray.push(times[i])
